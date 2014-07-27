@@ -53,16 +53,22 @@ get_token(Token *token)
     } else if(current_char == '-'){
       token->kind = SUB_OPERATOR_TOKEN;
       return;
-    } else if(current_char == '*'){
+    } else if (current_char == '*'){
       token->kind = MUL_OPERATOR_TOKEN;
       return;
-    } else if(current_char == '/'){
+    } else if (current_char == '/'){
       token->kind = DIV_OPERATOR_TOKEN;
+      return;
+    } else if (current_char == '(') {
+      token->kind = LFT_PARENTHESIS_TOKEN;
+      return;
+    } else if (current_char == ')') {
+      token->kind = RGT_PARENTHESIS_TOKEN;
       return;
     } else if (isdigit(current_char)) {
       if (status == INITIAL_STATUS) {
   	  status = IN_INT_PART_STATUS;          
-      }else if(status == DOT_STATUS) {
+      }else if (status == DOT_STATUS) {
   	  status = IN_FRAC_PART_STATUS;
       }
     } else if (current_char == '.'){
@@ -110,4 +116,5 @@ int main(int argc,char **argv){
 
   return 0;
 }
+
 */
