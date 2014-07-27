@@ -31,21 +31,34 @@ parse_primary_expression()
 {
   Token token;
   double value;
+  int miusFlag = 0;
   my_get_token(&token);
+
+  if (token.kind == SUB_OPERATOR_TOKEN){
+      miusFlag = -1;
+  }else{
+      unget_token(&token);
+  }
   
+  my_get_token(&token);
   if (token.kind == NUMBER_TOKEN){
-    return token.value;
+    value = token.value;
   } else if (token.kind == LFT_PARENTHESIS_TOKEN){
     value = parse_expression();
     my_get_token(&token);
     if (token.kind != RGT_PARENTHESIS_TOKEN){
       fprintf(stderr,"missing )");
+      exit(1);
     }
-    return value;
   } else {
     printf("syntax error 1, (%f).\n",token.value);
     exit(1);
     return 0.0; /*make compiler happy */
+  } 
+  if (miusFlag == -1){
+       return -value;
+  }else {
+       return value;
   }
 }
 
